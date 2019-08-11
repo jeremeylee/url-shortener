@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
-const URLShortenerSchema = new mongoose.Schema({
-  originalURL: String,
-  shortenURL: String,
+const UrlShortenerSchema = new mongoose.Schema({
+  originalUrl: String,
+  shortenUrl: String,
 });
 
-module.exports = mongoose.model('URLShortener', URLShortenerSchema);
+module.exports = mongoose.model('UrlShortener', UrlShortenerSchema);
