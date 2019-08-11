@@ -1,22 +1,9 @@
-const express = require('express');
-const mongoose = require('mongoose');
+const app = require('./app');
+const http = require('http');
 const config = require('./utils/config');
 
-const app = express();
- 
-mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true })
-  .then(() => {
-    console.log('MONGODB is running');
-  })
-  .catch((err) => {
-    console.log('error: ', err);
-  });
+const server = http.createServer(app);
 
-app.get('/', async (req, res, next) => {
-  res.send('Hello World');
-});
-
-const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => {
-  console.log(`Server connected to ${PORT}`);
+server.listen(config.PORT, () => {
+  console.log(`Server connected to ${config.PORT}`);
 });
