@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/jeremeylee/url-shortener#readme",
   "dependencies": {
+    "dotenv": "^8.0.0",
     "express": "^4.17.1",
     "mongoose": "^5.6.9",
     "nanoid": "^2.0.3"
