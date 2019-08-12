@@ -1,1 +1,9 @@
 @import '~antd/dist/antd.css';
+
+body {
+  background: #f9f9f9;
+}
+
+.form-container {
+  background: white;
+}

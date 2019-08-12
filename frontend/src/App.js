@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import shortenService from './services/shorten';
 import './App.css';
-import { Row, Typography, Input, Button, Icon } from 'antd';
+import { Row, Col, Typography, Input, Button, Icon } from 'antd';
 
-const { Title } = Typography;
+const { Title, Paragraph } = Typography;
 
 const App = (props) => {
   const [input, setInput] = useState('');
@@ -23,15 +23,12 @@ const App = (props) => {
     
   }
   
-  const handleCopy = () => {
-    navigator.clipboard.writeText(`${window.location.href}${shortenUrl}`);
-  }
   const displayShortenUrl = () => {
     const host = window.location.href;
+    const shortenLink = host.concat(shortenUrl)
     return (
       <Row type="flex" justify="center">
-        <Title>{host}{shortenUrl}</Title>
-        <Button onClick={handleCopy}><Icon type="copy" /></Button>
+          <Title level={3} copyable>{shortenLink}</Title>
       </Row>
     )
   }
@@ -40,14 +37,17 @@ const App = (props) => {
     <div className="container">
       <Row type="flex" justify="center">
         <Title>Url Shortener</Title>
-      </Row>
-      <Row type="flex" justify="center">
-        <form onSubmit={handleSubmit}>
-          <label>Enter a valid URL:</label>
-          <Input onChange={event => setInput(event.target.value)} placeholder="www.google.com" value={input}/>
-          <Button htmlType="submit">Shorten!</Button>
-        </form>
-      </Row>
+      </Row> 
+        <form onSubmit={handleSubmit} className="form-container">
+          <Row type="flex" justify="center">
+            <Col style={{ background: 'green', width: '300px' }} xs={4} sm={6} md={8} lg={10} xl={12}>
+              <Input onChange={event => setInput(event.target.value)} placeholder="www.google.com" value={input}/>
+            </Col>
+            <Col style={{ background: 'blue' }} span={2}>
+              <Button htmlType="submit">Shorten!</Button>
+            </Col>
+          </Row>
+      </form>
       {shortenUrl ? displayShortenUrl() : <div></div>}
     </div>
   );
