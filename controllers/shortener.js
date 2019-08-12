@@ -5,6 +5,7 @@ const UrlShortener = require('../models/UrlShortener');
 
 shortenerRouter.post('/', async (req, res, next) => {
   const { body } = req;
+  console.log(body);
   try {
     if (validUrl.isUri(body.url)) {
       const foundUrl = await UrlShortener.findOne({ originalUrl: body.url });
