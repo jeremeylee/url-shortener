@@ -13,22 +13,23 @@ shortenerRouter.get('/', async (req, res, next) => {
 
 shortenerRouter.post('/', async (req, res, next) => {
   const { body } = req;
-  console.log(body);
   try {
     if (validUrl.isUri(body.url)) {
       const foundUrl = await UrlShortener.findOne({ originalUrl: body.url });
-      console.log('foundUrl: ', foundUrl);
+
       if (foundUrl) {
-        console.log('here');
         res.send(`/${foundUrl.shortenUrl}`);
+
       } else {
         const shortenUrl = nanoid(10);
-        console.log(shortenUrl);
+
         const newShortenUrl = new UrlShortener({
           originalUrl: body.url,
           shortenUrl,
         });
+
         await newShortenUrl.save();
+
         res.status(200).send(`/${shortenUrl}`);
       }
     } else {
@@ -37,7 +38,19 @@ shortenerRouter.post('/', async (req, res, next) => {
   } catch (exception) {
     next(exception);
   }
-
 });
 
+shortenerRouter.get('/:id', async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const foundUrl = await UrlShortener.findOne({ shortenUrl: id });
+    if (foundUrl) {
+      res.redirect(foundUrl.originalUrl);
+    } else {
+      res.status(400).end();
+    }
+  } catch (exception) {
+    next(exception);
+  }
+})
 module.exports = shortenerRouter;
