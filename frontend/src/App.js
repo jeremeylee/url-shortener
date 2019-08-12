@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import shortenService from './services/shorten';
 import './App.css';
-import { Row, Typography, Input, Button } from 'antd';
+import { Row, Typography, Input, Button, Icon } from 'antd';
 
 const { Title } = Typography;
 
 const App = (props) => {
   const [input, setInput] = useState('');
-  const [shortenUrl, setShortenUrl] = useState('');
+  const [shortenUrl, setShortenUrl] = useState('test');
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -22,18 +22,22 @@ const App = (props) => {
     setInput('');
     
   }
-
+  
+  const handleCopy = () => {
+    navigator.clipboard.writeText(`${window.location.href}${shortenUrl}`);
+  }
   const displayShortenUrl = () => {
     const host = window.location.href;
     return (
       <Row type="flex" justify="center">
         <Title>{host}{shortenUrl}</Title>
+        <Button onClick={handleCopy}><Icon type="copy" /></Button>
       </Row>
     )
   }
 
   return (
-    <div>
+    <div className="container">
       <Row type="flex" justify="center">
         <Title>Url Shortener</Title>
       </Row>
