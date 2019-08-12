@@ -44,7 +44,7 @@ const App = (props) => {
           </Row>
           <Row type="flex" justify="center">
             <Col xs={4} sm={6} md={8} lg={10} xl={12}>
-              <Input onChange={event => setInput(event.target.value)} placeholder="http://www.google.com" value={input} className="input-form"/>
+              <Input onChange={event => setInput(event.target.value)} placeholder="https://www.google.com" value={input} className="input-form"/>
             </Col>
             <Col span={2}>
               <Button htmlType="submit" type="primary" size="large">Shorten!</Button>
