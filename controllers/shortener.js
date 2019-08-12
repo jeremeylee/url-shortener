@@ -3,15 +3,15 @@ const validUrl = require('valid-url');
 const nanoid = require('nanoid');
 const UrlShortener = require('../models/UrlShortener');
 
-shortenerRouter.post('/', async (req, res, next) => {
+shortenerRouter.post('/api/urlShortener', async (req, res, next) => {
   const { body } = req;
-  console.log(body);
+  console.log(body)
   try {
     if (validUrl.isUri(body.url)) {
       const foundUrl = await UrlShortener.findOne({ originalUrl: body.url });
-
       if (foundUrl) {
-        res.send(`/${foundUrl.shortenUrl}`);
+        console.log(foundUrl.toJSON());
+        res.send(foundUrl);
 
       } else {
         const shortenUrl = nanoid(10);
@@ -22,8 +22,7 @@ shortenerRouter.post('/', async (req, res, next) => {
         });
 
         await newShortenUrl.save();
-
-        res.status(200).send(`/${shortenUrl}`);
+        res.status(200).send(newShortenUrl);
       }
     } else {
       res.status(400).end();

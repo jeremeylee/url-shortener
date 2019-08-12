@@ -13,7 +13,7 @@ mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true })
   .catch((err) => {
     console.log('error: ', err);
   });
-app.use(express.static('public'));
+app.use(express.static('build'));
 app.use(bodyParser.json());
 app.use('/', shortenerRouter);
 

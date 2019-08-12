@@ -8,17 +8,30 @@ const { Title } = Typography;
 const App = (props) => {
   const [input, setInput] = useState('');
   const [shortenUrl, setShortenUrl] = useState('');
-  
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const UrlToShorten = {
       url: input,
     }
 
-    setShortenUrl(await shortenService.shortenUrl(UrlToShorten));
+    const response = await shortenService.shortenUrl(UrlToShorten);
+    console.log(response);
+    setShortenUrl(response.shortenUrl);
+    console.log(shortenUrl);
     setInput('');
     
   }
+
+  const displayShortenUrl = () => {
+    const host = window.location.href;
+    return (
+      <Row type="flex" justify="center">
+        <Title>{host}{shortenUrl}</Title>
+      </Row>
+    )
+  }
+
   return (
     <div>
       <Row type="flex" justify="center">
@@ -31,6 +44,7 @@ const App = (props) => {
           <Button htmlType="submit">Shorten!</Button>
         </form>
       </Row>
+      {shortenUrl ? displayShortenUrl() : <div></div>}
     </div>
   );
 }
