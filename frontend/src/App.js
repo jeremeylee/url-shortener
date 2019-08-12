@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import shortenService from './services/shorten';
 import './App.css';
 import { Row, Typography, Input, Button } from 'antd';
 
@@ -6,10 +7,17 @@ const { Title } = Typography;
 
 const App = (props) => {
   const [input, setInput] = useState('');
-
-  const handleSubmit = (event) => {
+  const [shortenUrl, setShortenUrl] = useState('');
+  
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(event.target.value);
+    const UrlToShorten = {
+      url: input,
+    }
+
+    setShortenUrl(await shortenService.shortenUrl(UrlToShorten));
+    setInput('');
+    
   }
   return (
     <div>
