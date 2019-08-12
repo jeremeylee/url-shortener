@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const config = require('./utils/config');
@@ -12,7 +13,7 @@ mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true })
   .catch((err) => {
     console.log('error: ', err);
   });
-
+app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use('/', shortenerRouter);
 
