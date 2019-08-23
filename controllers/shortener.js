@@ -14,8 +14,18 @@ shortenerRouter.post('/api/urlShortener', async (req, res, next) => {
         res.send(foundUrl);
 
       } else {
-        const shortenUrl = nanoid(10);
+        let notFound = true;
+        let shortenUrl = nanoid(10);
 
+        while (notFound) {
+          const foundUrl = await UrlShortener.findOne({ shortenUrl: shortenUrl});
+          if (foundUrl) {
+            shortenUrl = nanoid(10);
+          } else {
+            notFound = false;
+          }
+        }
+        
         const newShortenUrl = new UrlShortener({
           originalUrl: body.url,
           shortenUrl,
